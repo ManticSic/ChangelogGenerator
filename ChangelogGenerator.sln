@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangelogGenerator", "src\ChangelogGenerator\ChangelogGenerator.csproj", "{951ECC9F-A479-4D64-AAF0-7B22E7D9713C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangelogGenerator.Test", "src\ChangelogGenerator.Test\ChangelogGenerator.Test.csproj", "{D8EA05D2-CD0D-454E-889F-C1FEDC0C990E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{951ECC9F-A479-4D64-AAF0-7B22E7D9713C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{951ECC9F-A479-4D64-AAF0-7B22E7D9713C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{951ECC9F-A479-4D64-AAF0-7B22E7D9713C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{951ECC9F-A479-4D64-AAF0-7B22E7D9713C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8EA05D2-CD0D-454E-889F-C1FEDC0C990E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8EA05D2-CD0D-454E-889F-C1FEDC0C990E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8EA05D2-CD0D-454E-889F-C1FEDC0C990E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8EA05D2-CD0D-454E-889F-C1FEDC0C990E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
