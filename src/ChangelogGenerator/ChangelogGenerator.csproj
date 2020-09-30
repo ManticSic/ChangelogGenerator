@@ -18,4 +18,10 @@
       <PackageReference Include="UnityContainerAttributeRegistration" Version="0.1.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="PULL_REQUEST_TEMPLATE.md">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
