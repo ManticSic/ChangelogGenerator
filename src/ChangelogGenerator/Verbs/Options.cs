@@ -25,7 +25,7 @@ namespace ChangelogGenerator.Verbs
 
         [Option("token",
                 Required = false,
-                Default = null,
+                Default  = null,
                 HelpText = "GitHub authenfication token.")]
         public string Token { get; set; }
 
@@ -37,7 +37,7 @@ namespace ChangelogGenerator.Verbs
 
         [Option('v', "verbose",
                 Required = false,
-                Default = false,
+                Default  = false,
                 HelpText = "Be verbose.")]
         public bool Verbose { get; set; }
     }

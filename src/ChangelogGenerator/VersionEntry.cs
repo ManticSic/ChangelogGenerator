@@ -18,10 +18,10 @@ namespace ChangelogGenerator
         }
 
         [CanBeNull]
-        public string Title { get;  }
+        public string Title { get; }
 
-        public DateTimeOffset? ReleaseDate { get;  }
+        public DateTimeOffset? ReleaseDate { get; }
 
-        public IDictionary<string, IList<string>> Entries { get;  }
+        public IDictionary<string, IList<string>> Entries { get; }
     }
 }

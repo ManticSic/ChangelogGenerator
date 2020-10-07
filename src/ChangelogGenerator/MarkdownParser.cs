@@ -22,9 +22,11 @@ namespace ChangelogGenerator
 
         public IDictionary<string, IList<string>> GetChangelogEntries([NotNull] string markdown)
         {
-            return GetParsedChangelogEntries(markdown).GroupBy(tuple => tuple.type, tuple => tuple)
-                                                      .ToDictionary(grp => grp.Key, grp => grp.Select(tuple => tuple.entry).ToList())
-                                                      .ToDictionary(dict => dict.Key, dict => dict.Value as IList<string>);
+            return GetParsedChangelogEntries(markdown)
+                  .GroupBy(tuple => tuple.type, tuple => tuple)
+                  .ToDictionary(grp => grp.Key, grp => grp.Select(tuple => tuple.entry)
+                                                          .ToList())
+                  .ToDictionary(dict => dict.Key, dict => dict.Value as IList<string>);
         }
 
         public string GetChangelogBy(VersionEntry versionEntry)
@@ -101,8 +103,10 @@ namespace ChangelogGenerator
                     throw new InvalidOperationException("Malformed raw changelog entry:");
                 }
 
-                string type = parts[0].Trim();
-                string entry = parts[1].Trim();
+                string type = parts[0]
+                   .Trim();
+                string entry = parts[1]
+                   .Trim();
 
                 yield return (type, entry);
             }

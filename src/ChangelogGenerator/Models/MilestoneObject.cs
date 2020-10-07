@@ -10,20 +10,40 @@ namespace ChangelogGenerator.Models
 {
     internal class MilestoneObject
     {
+        public MilestoneObject(Milestone milestone, IReadOnlyList<PullRequest> pullRequests)
+        {
+            Milestone    = milestone;
+            PullRequests = pullRequests;
+        }
+
+        [CanBeNull]
+        public Milestone Milestone { get; }
+
+        [NotNull]
+        [ItemNotNull]
+        public IReadOnlyList<PullRequest> PullRequests { get; }
+
         [NotNull]
         [ItemNotNull]
         public static IEnumerable<MilestoneObject> From([NotNull] [ItemNotNull] IReadOnlyList<PullRequest> pullRequests)
         {
-            IList<MilestoneObject> transformedCollection = GroupPullrequestsByMilestone(pullRequests).Where(entry => entry.Value.Any()).Select(From).ToList();
+            IList<MilestoneObject> transformedCollection = GroupPullrequestsByMilestone(pullRequests)
+                                                          .Where(entry => entry.Value.Any())
+                                                          .Select(From)
+                                                          .ToList();
 
             return OrderMilestones(transformedCollection);
         }
 
-        private static IDictionary<(string title, Milestone milestone), IList<PullRequest>> GroupPullrequestsByMilestone([NotNull] [ItemNotNull] IReadOnlyList<PullRequest> pullRequests)
+        private static IDictionary<(string title, Milestone milestone), IList<PullRequest>> GroupPullrequestsByMilestone(
+            [NotNull] [ItemNotNull] IReadOnlyList<PullRequest> pullRequests)
         {
-            IDictionary< (string title, Milestone milestone), IList<PullRequest>> collection = new Dictionary<(string title, Milestone milestone), IList<PullRequest>>
+            IDictionary<(string title, Milestone milestone), IList<PullRequest>> collection =
+                new Dictionary<(string title, Milestone milestone), IList<PullRequest>>
                 {
-                    {(null, null), new List<PullRequest>()}
+                    {
+                        (null, null), new List<PullRequest>()
+                    }
                 };
 
             foreach(PullRequest pullRequest in pullRequests)
@@ -47,7 +67,8 @@ namespace ChangelogGenerator.Models
                     key = collection.Keys.First(entry => entry.title == pullRequest.Milestone.Title);
                 }
 
-                collection[key].Add(pullRequest);
+                collection[key]
+                   .Add(pullRequest);
             }
 
             return collection;
@@ -59,11 +80,13 @@ namespace ChangelogGenerator.Models
 
             IEnumerable<MilestoneObject> entriesWithVersion = transformedCollection.Where(entry => entry.Milestone != null);
 
-            IOrderedEnumerable<MilestoneObject> entriesWithOpenVersion = entriesWithVersion.Where(entry => entry.Milestone?.ClosedAt == null)
-                                                                                           .OrderByDescending(entry => entry.Milestone.Title);
+            IOrderedEnumerable<MilestoneObject> entriesWithOpenVersion = entriesWithVersion
+                                                                        .Where(entry => entry.Milestone?.ClosedAt == null)
+                                                                        .OrderByDescending(entry => entry.Milestone.Title);
 
-            IOrderedEnumerable<MilestoneObject> entriesWithClosedVersion = entriesWithVersion.Where(entry => entry.Milestone?.ClosedAt != null)
-                                                                                .OrderByDescending(entry => entry.Milestone?.ClosedAt);
+            IOrderedEnumerable<MilestoneObject> entriesWithClosedVersion = entriesWithVersion
+                                                                          .Where(entry => entry.Milestone?.ClosedAt != null)
+                                                                          .OrderByDescending(entry => entry.Milestone?.ClosedAt);
 
             List<MilestoneObject> result = new List<MilestoneObject>();
 
@@ -88,20 +111,8 @@ namespace ChangelogGenerator.Models
         [NotNull]
         private static MilestoneObject From(KeyValuePair<(string title, Milestone milestone), IList<PullRequest>> entry)
         {
-            return new MilestoneObject(entry.Key.milestone, entry.Value.ToList().AsReadOnly());
+            return new MilestoneObject(entry.Key.milestone, entry.Value.ToList()
+                                                                 .AsReadOnly());
         }
-
-        public MilestoneObject(Milestone milestone, IReadOnlyList<PullRequest> pullRequests)
-        {
-            Milestone    = milestone;
-            PullRequests = pullRequests;
-        }
-
-        [CanBeNull]
-        public Milestone Milestone { get; }
-
-        [NotNull]
-        [ItemNotNull]
-        public IReadOnlyList<PullRequest> PullRequests { get; }
     }
 }
