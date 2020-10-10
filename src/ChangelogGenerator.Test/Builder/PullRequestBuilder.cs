@@ -84,7 +84,11 @@ namespace ChangelogGenerator.Test.Builder
 
         public PullRequest Build()
         {
-            return new PullRequest(Id, NodeId, Url, HtmlUrl, DiffUrl, PatchUrl, IssueUrl, StatusesUrl, Number, State, Title, Body, CreatedAt, UpdatedAt, ClosedAt, MergedAt, Head, Base, User, Assignee, Assignees, Draft, Mergeable, MergeableState, MergedBy, MergeCommitSha, Comments, Commits, Additions, Deletions, ChangedFiles, Milestone, Locked, MaintainerCanModify, RequestedReviewers, RequestedTeams, Labels);
+            return new PullRequest(Id, NodeId, Url, HtmlUrl, DiffUrl, PatchUrl, IssueUrl, StatusesUrl, Number, State, Title, Body,
+                                   CreatedAt, UpdatedAt, ClosedAt, MergedAt, Head, Base, User, Assignee, Assignees, Draft,
+                                   Mergeable, MergeableState, MergedBy, MergeCommitSha, Comments, Commits, Additions, Deletions,
+                                   ChangedFiles, Milestone, Locked, MaintainerCanModify, RequestedReviewers, RequestedTeams,
+                                   Labels);
         }
     }
 }

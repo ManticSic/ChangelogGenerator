@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-
-
-namespace ChangelogGenerator.Verbs
+﻿namespace ChangelogGenerator.Verbs
 {
     internal interface IVerbHandler
     {

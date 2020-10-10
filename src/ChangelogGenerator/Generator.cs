@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
-using System.Reflection;
-using System.Threading.Tasks;
 
 using ChangelogGenerator.Verbs;
 using ChangelogGenerator.Verbs.New;

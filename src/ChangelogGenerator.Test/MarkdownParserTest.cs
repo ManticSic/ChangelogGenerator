@@ -18,9 +18,45 @@ namespace ChangelogGenerator.Test
     public class MarkdownParserTest
     {
         [Test]
-        [TestCase("description_at-the-end.md", new[]{ "an added entry"} , new[]{"a changed entry"} , new[]{"a deprecated entry"} , new[]{"a fixed entry"} , new[]{"a removed entry"} , new[]{"a security entry" })]
-        [TestCase("description_at-the-middle.md", new[]{ "an added entry"} , new[]{"a changed entry"} , new[]{"a deprecated entry"} , new[]{"a fixed entry"} , new[]{"a removed entry"} , new[]{"a security entry" })]
-        public void TestGetChangelogEntries(string fileName,
+        [TestCase("description_at-the-end.md", new[]
+                                               {
+                                                   "an added entry"
+                                               }, new[]
+                                                  {
+                                                      "a changed entry"
+                                                  }, new[]
+                                                     {
+                                                         "a deprecated entry"
+                                                     }, new[]
+                                                        {
+                                                            "a fixed entry"
+                                                        }, new[]
+                                                           {
+                                                               "a removed entry"
+                                                           }, new[]
+                                                              {
+                                                                  "a security entry"
+                                                              })]
+        [TestCase("description_at-the-middle.md", new[]
+                                                  {
+                                                      "an added entry"
+                                                  }, new[]
+                                                     {
+                                                         "a changed entry"
+                                                     }, new[]
+                                                        {
+                                                            "a deprecated entry"
+                                                        }, new[]
+                                                           {
+                                                               "a fixed entry"
+                                                           }, new[]
+                                                              {
+                                                                  "a removed entry"
+                                                              }, new[]
+                                                                 {
+                                                                     "a security entry"
+                                                                 })]
+        public void TestGetChangelogEntries(string   fileName,
                                             string[] expectedAddedEntries,
                                             string[] expectedChangedEntries,
                                             string[] expectedDeprecatedEntries,
@@ -29,7 +65,7 @@ namespace ChangelogGenerator.Test
                                             string[] expectedSecurityEntries)
         {
             IMarkdownParser markdownParser = new MarkdownParser();
-            string         markdownText   = File.ReadAllText($"./Assets/{fileName}");
+            string          markdownText   = File.ReadAllText($"./Assets/{fileName}");
 
             IDictionary<string, IList<string>> result = markdownParser.GetChangelogEntries(markdownText);
 
@@ -71,8 +107,15 @@ namespace ChangelogGenerator.Test
         {
             IMarkdownParser markdownParser = new MarkdownParser();
 
-            Milestone       milestone       = new MilestoneBuilder{Title = "v1.2.3", ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)}.Build();
-            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]{});
+            Milestone milestone = new MilestoneBuilder
+                                  {
+                                      Title = "v1.2.3",
+                                      ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy",
+                                                                           CultureInfo.InvariantCulture)
+                                  }.Build();
+            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
+                                                                             {
+                                                                             });
             Dictionary<string, IList<string>> entries = new Dictionary<string, IList<string>>
                                                         {
                                                             {
@@ -90,9 +133,10 @@ namespace ChangelogGenerator.Test
                                                                            }
                                                             }
                                                         };
-            VersionEntry    versionEntry              = new VersionEntry(milestoneObject, entries);
+            VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
-            string expected = "## v1.2.3 (1993-11-01)\n\n### added\n\n* first added entry\n* second added entry\n\n### changed\n\n* first changed entry\n* second changed entry";
+            string expected =
+                "## v1.2.3 (1993-11-01)\n\n### added\n\n* first added entry\n* second added entry\n\n### changed\n\n* first changed entry\n* second changed entry";
 
             string result = markdownParser.GetChangelogBy(versionEntry);
 
@@ -104,10 +148,17 @@ namespace ChangelogGenerator.Test
         {
             IMarkdownParser markdownParser = new MarkdownParser();
 
-            Milestone       milestone       = new MilestoneBuilder{Title = "v1.2.3", ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)}.Build();
-            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]{});
-            Dictionary<string, IList<string>> entries = new Dictionary<string, IList<string>>();
-            VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
+            Milestone milestone = new MilestoneBuilder
+                                  {
+                                      Title = "v1.2.3",
+                                      ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy",
+                                                                           CultureInfo.InvariantCulture)
+                                  }.Build();
+            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
+                                                                             {
+                                                                             });
+            Dictionary<string, IList<string>> entries      = new Dictionary<string, IList<string>>();
+            VersionEntry                      versionEntry = new VersionEntry(milestoneObject, entries);
 
             string result = markdownParser.GetChangelogBy(versionEntry);
 
@@ -119,8 +170,15 @@ namespace ChangelogGenerator.Test
         {
             IMarkdownParser markdownParser = new MarkdownParser();
 
-            Milestone       milestone       = new MilestoneBuilder{Title = "v1.2.3", ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)}.Build();
-            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]{});
+            Milestone milestone = new MilestoneBuilder
+                                  {
+                                      Title = "v1.2.3",
+                                      ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy",
+                                                                           CultureInfo.InvariantCulture)
+                                  }.Build();
+            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
+                                                                             {
+                                                                             });
             Dictionary<string, IList<string>> entries = new Dictionary<string, IList<string>>
                                                         {
                                                             {
@@ -136,7 +194,7 @@ namespace ChangelogGenerator.Test
                                                         };
             VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
-            string result   = markdownParser.GetChangelogBy(versionEntry);
+            string result = markdownParser.GetChangelogBy(versionEntry);
 
             string expected = "## v1.2.3 (1993-11-01)\n\n### changed\n\n* first changed entry\n* second changed entry";
 
@@ -148,8 +206,13 @@ namespace ChangelogGenerator.Test
         {
             IMarkdownParser markdownParser = new MarkdownParser();
 
-            Milestone       milestone       = new MilestoneBuilder{Title = "v1.2.3"}.Build();
-            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]{});
+            Milestone milestone = new MilestoneBuilder
+                                  {
+                                      Title = "v1.2.3"
+                                  }.Build();
+            MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
+                                                                             {
+                                                                             });
             Dictionary<string, IList<string>> entries = new Dictionary<string, IList<string>>
                                                         {
                                                             {
@@ -158,7 +221,7 @@ namespace ChangelogGenerator.Test
                                                                              "first added entry",
                                                                              "second added entry"
                                                                          }
-                                                            },
+                                                            }
                                                         };
             VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
@@ -174,7 +237,9 @@ namespace ChangelogGenerator.Test
         {
             IMarkdownParser markdownParser = new MarkdownParser();
 
-            MilestoneObject milestoneObject = new MilestoneObject(null, new PullRequest[]{});
+            MilestoneObject milestoneObject = new MilestoneObject(null, new PullRequest[]
+                                                                        {
+                                                                        });
             Dictionary<string, IList<string>> entries = new Dictionary<string, IList<string>>
                                                         {
                                                             {
@@ -183,7 +248,7 @@ namespace ChangelogGenerator.Test
                                                                              "first added entry",
                                                                              "second added entry"
                                                                          }
-                                                            },
+                                                            }
                                                         };
             VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
@@ -197,8 +262,9 @@ namespace ChangelogGenerator.Test
         private void ExpectEquivalentEntries(IDictionary<string, IList<string>> result, string key, string[] expectedEntries)
         {
             IsTrue(result.ContainsKey(key));
-            AreEqual(expectedEntries.Length, result[key].Count);
+            AreEqual(expectedEntries.Length, result[key]
+                        .Count);
             That(result[key], Is.EquivalentTo(expectedEntries));
-        } 
+        }
     }
 }
