@@ -1,6 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <AssemblyTitle>Changelog Generator</AssemblyTitle>
+        <Product>Changelog Generator</Product>
+        <FileVersion>0.1.0</FileVersion>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <Version>0.1.0</Version>
+    </PropertyGroup>
+    
+    <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
