@@ -5,11 +5,11 @@ Describe the big picture of your changes here to communicate to the maintainers 
 
 ## Checklist
 
-[ ] Code compiles correctly
-[ ] Created tests which fail without the change (if possible)
-[ ] All tests passing
-[ ] Extend the README / documentation, if necessary
-[ ] Applied the code style
+- [ ] Code compiles correctly
+- [ ] Created tests which fail without the change (if possible)
+- [ ] All tests passing
+- [ ] Extend the README / documentation, if necessary
+- [ ] Applied the code style
 
 
 ## Where has this been tested?
