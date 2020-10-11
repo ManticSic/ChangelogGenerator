@@ -12,14 +12,14 @@ Display the help screen.
 Display version information.
 
 ### ChangelogGenerator-new
-Create a new or override a existing changelog file.
+Generate a new or override a existing changelog file.
 
 ```
 --repository     Required. Set the repository name.
 
 --owner          Required. Set the owner of the repository.
 
---token          GitHub authenfication token.
+--token          GitHub authentication token.
 
 -o, --output     (Default: CHANGELOG.md) Set output file name.
 
