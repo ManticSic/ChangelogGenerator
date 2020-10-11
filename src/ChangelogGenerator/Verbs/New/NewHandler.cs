@@ -58,7 +58,7 @@ namespace ChangelogGenerator.Verbs.New
 
             PullRequestRequest pullRequestRequest = new PullRequestRequest
                                                     {
-                                                        State = ItemStateFilter.All
+                                                        State = ItemStateFilter.All,
                                                     };
 
             try

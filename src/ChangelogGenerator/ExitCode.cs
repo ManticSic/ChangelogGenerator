@@ -5,6 +5,6 @@
         Success                 = 0,
         FailedToLoadData        = 100,
         FailedToCreateChangelog = 200,
-        FailedToWriteFile       = 300
+        FailedToWriteFile       = 300,
     }
 }

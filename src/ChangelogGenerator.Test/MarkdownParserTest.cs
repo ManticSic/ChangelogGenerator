@@ -18,44 +18,10 @@ namespace ChangelogGenerator.Test
     public class MarkdownParserTest
     {
         [Test]
-        [TestCase("description_at-the-end.md", new[]
-                                               {
-                                                   "an added entry"
-                                               }, new[]
-                                                  {
-                                                      "a changed entry"
-                                                  }, new[]
-                                                     {
-                                                         "a deprecated entry"
-                                                     }, new[]
-                                                        {
-                                                            "a fixed entry"
-                                                        }, new[]
-                                                           {
-                                                               "a removed entry"
-                                                           }, new[]
-                                                              {
-                                                                  "a security entry"
-                                                              })]
-        [TestCase("description_at-the-middle.md", new[]
-                                                  {
-                                                      "an added entry"
-                                                  }, new[]
-                                                     {
-                                                         "a changed entry"
-                                                     }, new[]
-                                                        {
-                                                            "a deprecated entry"
-                                                        }, new[]
-                                                           {
-                                                               "a fixed entry"
-                                                           }, new[]
-                                                              {
-                                                                  "a removed entry"
-                                                              }, new[]
-                                                                 {
-                                                                     "a security entry"
-                                                                 })]
+        [TestCase("description_at-the-end.md", new[] {"an added entry"}, new[] {"a changed entry"}, new[] {"a deprecated entry"},
+                  new[] {"a fixed entry"}, new[] {"a removed entry"}, new[] {"a security entry"})]
+        [TestCase("description_at-the-middle.md", new[] {"an added entry"}, new[] {"a changed entry"},
+                  new[] {"a deprecated entry"}, new[] {"a fixed entry"}, new[] {"a removed entry"}, new[] {"a security entry"})]
         public void TestGetChangelogEntries(string   fileName,
                                             string[] expectedAddedEntries,
                                             string[] expectedChangedEntries,
@@ -111,7 +77,7 @@ namespace ChangelogGenerator.Test
                                   {
                                       Title = "v1.2.3",
                                       ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy",
-                                                                           CultureInfo.InvariantCulture)
+                                                                           CultureInfo.InvariantCulture),
                                   }.Build();
             MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
                                                                              {
@@ -122,16 +88,16 @@ namespace ChangelogGenerator.Test
                                                                 "added", new[]
                                                                          {
                                                                              "first added entry",
-                                                                             "second added entry"
+                                                                             "second added entry",
                                                                          }
                                                             },
                                                             {
                                                                 "changed", new[]
                                                                            {
                                                                                "first changed entry",
-                                                                               "second changed entry"
+                                                                               "second changed entry",
                                                                            }
-                                                            }
+                                                            },
                                                         };
             VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
@@ -152,7 +118,7 @@ namespace ChangelogGenerator.Test
                                   {
                                       Title = "v1.2.3",
                                       ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy",
-                                                                           CultureInfo.InvariantCulture)
+                                                                           CultureInfo.InvariantCulture),
                                   }.Build();
             MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
                                                                              {
@@ -174,7 +140,7 @@ namespace ChangelogGenerator.Test
                                   {
                                       Title = "v1.2.3",
                                       ClosedAt = DateTimeOffset.ParseExact("01.11.1993", "dd.MM.yyyy",
-                                                                           CultureInfo.InvariantCulture)
+                                                                           CultureInfo.InvariantCulture),
                                   }.Build();
             MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
                                                                              {
@@ -188,9 +154,9 @@ namespace ChangelogGenerator.Test
                                                                 "changed", new[]
                                                                            {
                                                                                "first changed entry",
-                                                                               "second changed entry"
+                                                                               "second changed entry",
                                                                            }
-                                                            }
+                                                            },
                                                         };
             VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
@@ -208,7 +174,7 @@ namespace ChangelogGenerator.Test
 
             Milestone milestone = new MilestoneBuilder
                                   {
-                                      Title = "v1.2.3"
+                                      Title = "v1.2.3",
                                   }.Build();
             MilestoneObject milestoneObject = new MilestoneObject(milestone, new PullRequest[]
                                                                              {
@@ -219,9 +185,9 @@ namespace ChangelogGenerator.Test
                                                                 "added", new[]
                                                                          {
                                                                              "first added entry",
-                                                                             "second added entry"
+                                                                             "second added entry",
                                                                          }
-                                                            }
+                                                            },
                                                         };
             VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
@@ -246,9 +212,9 @@ namespace ChangelogGenerator.Test
                                                                 "added", new[]
                                                                          {
                                                                              "first added entry",
-                                                                             "second added entry"
+                                                                             "second added entry",
                                                                          }
-                                                            }
+                                                            },
                                                         };
             VersionEntry versionEntry = new VersionEntry(milestoneObject, entries);
 
