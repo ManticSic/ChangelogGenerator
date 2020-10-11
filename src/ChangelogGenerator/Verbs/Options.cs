@@ -20,13 +20,13 @@ namespace ChangelogGenerator.Verbs
         [Option("token",
                 Required = false,
                 Default  = null,
-                HelpText = "GitHub authenfication token.")]
+                HelpText = "GitHub authentication token.")]
         public string Token { get; set; } = null;
 
         [Option('o', "output",
                 Required = false,
                 Default  = "CHANGELOG.md",
-                HelpText = "Set output file name. Default: CHANGELOG.md.")]
+                HelpText = "Set output file name.")]
         public string Output { get; set; } = "CHANGELOG.md";
 
         [Option('v', "verbose",
