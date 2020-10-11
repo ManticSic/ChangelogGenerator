@@ -24,7 +24,7 @@ before_deploy:
   - dotnet publish -p:PublishProfile=Properties/PublishProfiles/win-x64.pubxml
   - zip changelog-generator.win-x64.zip src/ChangelogGenerator/bin/Release/netcoreapp3.1/publish/win-x64/ChangelogGenerator.exe
   - dotnet publish -p:PublishProfile=Properties/PublishProfiles/linux-x64.pubxml
-  - zip changelog-generator.linux-x64.zip src/ChangelogGenerator/bin/Release/netcoreapp3.1/publish/linux-x64/ChangelogGenerator.exe
+  - zip changelog-generator.linux-x64.zip src/ChangelogGenerator/bin/Release/netcoreapp3.1/publish/linux-x64/ChangelogGenerator
     
 deploy:
   provider: releases
