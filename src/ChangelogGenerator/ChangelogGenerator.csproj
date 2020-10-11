@@ -6,6 +6,7 @@
         <FileVersion>0.1.0</FileVersion>
         <AssemblyVersion>0.1.0</AssemblyVersion>
         <Version>0.1.0</Version>
+        <Company>Darius Weber</Company>
     </PropertyGroup>
     
     <PropertyGroup>

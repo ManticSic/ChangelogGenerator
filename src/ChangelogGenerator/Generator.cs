@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
+using System.Linq;
+using System.Reflection;
 
 using ChangelogGenerator.Verbs;
 using ChangelogGenerator.Verbs.New;
@@ -51,7 +53,7 @@ namespace ChangelogGenerator
         private static IGitHubClient GitHubClientFactory(IUnityContainer container)
         {
             Options            options            = container.Resolve<Options>();
-            ProductHeaderValue productHeaderValue = new ProductHeaderValue(ProductName); // todo use assembly info
+            ProductHeaderValue productHeaderValue = GetProductHeaderValue();
 
             if(!String.IsNullOrWhiteSpace(options.Token))
             {
@@ -62,6 +64,40 @@ namespace ChangelogGenerator
             }
 
             return new GitHubClient(productHeaderValue);
+        }
+
+        private static ProductHeaderValue GetProductHeaderValue()
+        {
+            string productName = GetProductName();
+            string versionInfo = GetVersionInfo();
+
+            return new ProductHeaderValue(productName, versionInfo);
+        }
+
+        private static string GetProductName()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            AssemblyProductAttribute assemblyTitle = assembly.GetCustomAttributes<AssemblyProductAttribute>()
+                                                             .FirstOrDefault();
+
+            return assemblyTitle != null
+                       ? assemblyTitle.Product
+                       : assembly.GetName()
+                                 .Name;
+        }
+
+        private static string GetVersionInfo()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            AssemblyInformationalVersionAttribute assemblyInformationalVersion = assembly
+                                                                                .GetCustomAttributes<
+                                                                                     AssemblyInformationalVersionAttribute>()
+                                                                                .FirstOrDefault();
+
+            return assemblyInformationalVersion != null
+                       ? assemblyInformationalVersion.InformationalVersion
+                       : assembly.GetName()
+                                 .Version?.ToString();
         }
 
         private void Run()
