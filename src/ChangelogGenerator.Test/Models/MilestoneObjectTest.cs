@@ -26,8 +26,8 @@ namespace ChangelogGenerator.Test.Models
                                               {
                                                   Title = "Milestone1",
                                                   ClosedAt = DateTimeOffset.ParseExact(
-                                                      "01.11.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)
-                                              }.Build()
+                                                      "01.11.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                                              }.Build(),
                               }.Build();
 
             PullRequest pr2 = new PullRequestBuilder
@@ -36,8 +36,8 @@ namespace ChangelogGenerator.Test.Models
                                               {
                                                   Title = "Milestone1",
                                                   ClosedAt = DateTimeOffset.ParseExact(
-                                                      "01.11.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)
-                                              }.Build()
+                                                      "01.11.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                                              }.Build(),
                               }.Build();
 
             PullRequest pr3 = new PullRequestBuilder
@@ -46,8 +46,8 @@ namespace ChangelogGenerator.Test.Models
                                               {
                                                   Title = "Milestone2",
                                                   ClosedAt = DateTimeOffset.ParseExact(
-                                                      "15.09.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)
-                                              }.Build()
+                                                      "15.09.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                                              }.Build(),
                               }.Build();
 
             PullRequest pr4 = new PullRequestBuilder
@@ -56,8 +56,8 @@ namespace ChangelogGenerator.Test.Models
                                               {
                                                   Title = "Milestone2",
                                                   ClosedAt = DateTimeOffset.ParseExact(
-                                                      "15.09.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)
-                                              }.Build()
+                                                      "15.09.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                                              }.Build(),
                               }.Build();
 
             PullRequest pr5 = new PullRequestBuilder
@@ -66,16 +66,16 @@ namespace ChangelogGenerator.Test.Models
                                               {
                                                   Title = "Milestone2",
                                                   ClosedAt = DateTimeOffset.ParseExact(
-                                                      "15.09.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture)
-                                              }.Build()
+                                                      "15.09.1993", "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                                              }.Build(),
                               }.Build();
 
             PullRequest pr6 = new PullRequestBuilder
                               {
                                   Milestone = new MilestoneBuilder
                                               {
-                                                  Title = "Milestone3"
-                                              }.Build()
+                                                  Title = "Milestone3",
+                                              }.Build(),
                               }.Build();
 
             PullRequest pr7 = new PullRequestBuilder().Build();
@@ -88,7 +88,7 @@ namespace ChangelogGenerator.Test.Models
                                                           pr4,
                                                           pr5,
                                                           pr6,
-                                                          pr7
+                                                          pr7,
                                                       };
 
             IList<MilestoneObject> result = MilestoneObject.From(pullRequests)

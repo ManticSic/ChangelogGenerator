@@ -27,7 +27,7 @@ namespace ChangelogGenerator.Test.Verbs.New
             NewOptions options = new NewOptions
                                  {
                                      Owner      = "ManticSic",
-                                     Repository = "ChangelogGenerator"
+                                     Repository = "ChangelogGenerator",
                                  };
 
             Mock<IGitHubClient>           client                 = new Mock<IGitHubClient>();
@@ -40,13 +40,13 @@ namespace ChangelogGenerator.Test.Verbs.New
                                   {
                                       Title = "v1.0.0",
                                       ClosedAt = DateTimeOffset.ParseExact("15.09.1993", "dd.MM.yyyy",
-                                                                           CultureInfo.InvariantCulture)
+                                                                           CultureInfo.InvariantCulture),
                                   }.Build();
 
             PullRequest pullRequest = new PullRequestBuilder
                                       {
                                           Milestone = milestone,
-                                          Body      = File.ReadAllText("./Assets/description_at-the-middle.md")
+                                          Body      = File.ReadAllText("./Assets/description_at-the-middle.md"),
                                       }.Build();
 
             IDictionary<string, IList<string>> changelogEntries = new Dictionary<string, IList<string>>
@@ -54,39 +54,39 @@ namespace ChangelogGenerator.Test.Verbs.New
                                                                       {
                                                                           "added", new List<string>
                                                                                    {
-                                                                                       "an added entry"
+                                                                                       "an added entry",
                                                                                    }
                                                                       },
                                                                       {
                                                                           "changed", new List<string>
                                                                                      {
-                                                                                         "a changed entry"
+                                                                                         "a changed entry",
                                                                                      }
                                                                       },
                                                                       {
                                                                           "deprecated", new List<string>
                                                                               {
-                                                                                  "a deprecated entry"
+                                                                                  "a deprecated entry",
                                                                               }
                                                                       },
                                                                       {
                                                                           "fixed", new List<string>
                                                                                    {
-                                                                                       "a fixed entry"
+                                                                                       "a fixed entry",
                                                                                    }
                                                                       },
                                                                       {
                                                                           "removed", new List<string>
                                                                                      {
-                                                                                         "a removed entry"
+                                                                                         "a removed entry",
                                                                                      }
                                                                       },
                                                                       {
                                                                           "security", new List<string>
                                                                               {
-                                                                                  "a security entry"
+                                                                                  "a security entry",
                                                                               }
-                                                                      }
+                                                                      },
                                                                   };
 
             string changelogText =
@@ -97,7 +97,7 @@ namespace ChangelogGenerator.Test.Verbs.New
             client.Setup(mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()))
                   .Returns(Task.FromResult(new List<PullRequest>
                                            {
-                                               pullRequest
+                                               pullRequest,
                                            }.AsReadOnly() as IReadOnlyList<PullRequest>));
 
             markdownParser.Setup(mock => mock.GetChangelogEntries(It.IsAny<string>()))

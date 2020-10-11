@@ -43,7 +43,7 @@ namespace ChangelogGenerator.Models
                 {
                     {
                         (null, null), new List<PullRequest>()
-                    }
+                    },
                 };
 
             foreach(PullRequest pullRequest in pullRequests)
