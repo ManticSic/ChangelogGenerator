@@ -1,0 +1,39 @@
+language: csharp
+
+os: linux
+dist: bionic
+arch: amd64
+
+mono: none
+dotnet: 3.1.402
+solution: ChangelogGenerator.sln
+
+env:
+  global:
+    secure: IJ/Qunbal3XgUdLYLYEcVsG3oqAdPmM0DXV9xdHgfTX5WFEJKLR0wc07HOI7S649Zt9znI1gXuEiFu/AzO+NoCulEMzf9j0UM++XZC7qfAIK7C6r9CcHS3NJm+Rq6lSMtqKtHuq1mod3TAxAw/x/of3E5EdHW1JOEWWJwgHuk8ukiVrc6djqWFl4e+1fvoo36FshqSeSW6BHcc7QlMUr4n5zuHJRcCQXSpmWvRjtP7u0YVU4IseIIcHZ4wiAGj3tAgg4r/3qaR65t9Sbi9f/+2pId2PSb/TzzIQsT6msF+jI2v+phWSKagupGv9JnyZMAHLr3hPukE4/qY4dzecVDq4rbtVPw4s5PXTSXwn+6QQl1aDODMo1ncHgggFThGDZgql9553m4UM1MJwFh25EF+aG3rT+9HZL4cwtuNHwB+DyVWck692Tqv1j5H1YzBW9OquoswNVymkDjoPZUPFZveGvYLa/sE2DYxUilJoxHOczJsoRiR4Flo0+Vr9xLDPupkH1pg/Iw2tgckvOSgBEActeCYbIFj/mkqQk+YmpdaEOGGP7mNsipbXmVZTp2HjHSRUy2kgOC1pkIJQcHVfdeGFChr1Q7pSaVK3xoKKXhydixQKjoWoNwotMwjQHtns3xChB7Jej9JJz1pWYSY6OF/YVVr8hiE909JuoB/uIksY=
+
+git:
+  depth: false
+
+script:
+  - dotnet restore
+  - dotnet build --configuration release --no-restore --verbosity minimal
+  - dotnet test  --configuration release --no-restore --verbosity minimal
+    
+before_deploy:
+  - dotnet publish -p:PublishProfile=Properties/PublishProfiles/win-x64.pubxml
+  - zip changelog-generator.win-x64.zip src/ChangelogGenerator/bin/Release/netcoreapp3.1/publish/win-x64/ChangelogGenerator.exe
+  - dotnet publish -p:PublishProfile=Properties/PublishProfiles/linux-x64.pubxml
+  - zip changelog-generator.linux-x64.zip src/ChangelogGenerator/bin/Release/netcoreapp3.1/publish/linux-x64/ChangelogGenerator.exe
+    
+deploy:
+  provider: releases
+  api_key: "$GH_TOKEN"
+  file_glob: true
+  file:
+    - "changelog-generator.win-x64.zip"
+    - "changelog-generator.linux-x64.zip"
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
