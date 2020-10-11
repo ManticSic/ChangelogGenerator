@@ -1,2 +1,30 @@
+[![Build Status](https://travis-ci.org/ManticSic/ChangelogGenerator.svg?branch=master)](https://travis-ci.org/ManticSic/ChangelogGenerator)
+
 # ChangelogGenerator
 Simple changelog generator using milestones and associated pull requests.
+
+## CLI options
+
+### ChangelogGenerator-help
+Display the help screen.
+
+### ChangelogGenerator-version
+Display version information.
+
+### ChangelogGenerator-new
+Create a new or override a existing changelog file.
+
+```
+--repository     Required. Set the repository name.
+
+--owner          Required. Set the owner of the repository.
+
+--token          GitHub authenfication token.
+
+-o, --output     (Default: CHANGELOG.md) Set output file name.
+
+-v, --verbose    (Default: false) Be verbose.
+```
+
+
+
