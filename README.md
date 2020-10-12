@@ -15,9 +15,9 @@ Display version information.
 Generate a new or override a existing changelog file.
 
 ```
---repository     Required. Set the repository name.
-
 --owner          Required. Set the owner of the repository.
+
+--repository     Required. Set the repository name.
 
 --token          GitHub authentication token.
 
