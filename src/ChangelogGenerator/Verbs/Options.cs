@@ -5,17 +5,17 @@ namespace ChangelogGenerator.Verbs
 {
     internal class Options
     {
-        [Option("repository",
-                Required = true,
-                Default  = null,
-                HelpText = "Set the repository name.")]
-        public string Repository { get; set; }
-
         [Option("owner",
                 Required = true,
                 Default  = null,
                 HelpText = "Set the owner of the repository.")]
         public string Owner { get; set; }
+
+        [Option("repository",
+                Required = true,
+                Default  = null,
+                HelpText = "Set the repository name.")]
+        public string Repository { get; set; }
 
         [Option("token",
                 Required = false,
