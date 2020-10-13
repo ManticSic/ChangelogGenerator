@@ -28,11 +28,19 @@ namespace ChangelogGenerator.Verbs.New
 
             IReadOnlyList<PullRequest> pullRequests = await LoadPullRequestsAsync();
 
+            if(pullRequests == null || pullRequests.Count < 1)
+            {
+                Log.Error("Failed to load pull request.");
+                Log.VerboseError("Failed to load pull request, but HTTP request was successful.");
+                Exit(ExitCode.FailedToLoadData);
+
+                return;
+            }
+
             Log.VerboseInfo($"Successfully fetched {pullRequests?.Count} pull requests.");
             string changelog = CreateChangelogMarkdown(pullRequests);
 
-            Log.VerboseInfo("Changelog:");
-            Log.VerboseInfo(changelog);
+            Log.VerboseInfo($"Changelog:\n{changelog}");
 
             await WriteChangelogAsync(changelog);
 
