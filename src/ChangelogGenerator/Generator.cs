@@ -23,8 +23,6 @@ namespace ChangelogGenerator
     [RegisterType]
     internal class Generator
     {
-        private const string ProductName = "ChangelogGenerator";
-
         private readonly string[]        args;
         private readonly IUnityContainer container;
 
@@ -39,9 +37,10 @@ namespace ChangelogGenerator
             IUnityContainer container = new UnityContainerPopulator().Populate();
 
             container.RegisterType<IFileSystem, FileSystem>();
-            container.RegisterType<ILog, Log>();
-            container.RegisterType<IEnvironmentAbstraction, EnvironmentAbstraction>();
 
+            container.RegisterInstance<IEnvironmentAbstraction>(new EnvironmentAbstraction(Environment.Exit));
+            container.RegisterInstance("stdout", Console.Out);
+            container.RegisterInstance("stderr", Console.Error);
             container.RegisterInstance(args);
 
             container.RegisterFactory<IGitHubClient>(GitHubClientFactory);

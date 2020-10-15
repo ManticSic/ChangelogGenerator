@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <AssemblyTitle>Changelog Generator</AssemblyTitle>
-        <Product>Changelog Generator</Product>
+        <Product>ChangelogGenerator</Product>
         <FileVersion>0.1.0</FileVersion>
         <AssemblyVersion>0.1.0</AssemblyVersion>
         <Version>0.1.0</Version>

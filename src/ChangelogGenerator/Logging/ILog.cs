@@ -1,4 +1,4 @@
-﻿namespace ChangelogGenerator
+﻿namespace ChangelogGenerator.Logging
 {
     internal interface ILog
     {
