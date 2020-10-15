@@ -4,6 +4,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
 
+using ChangelogGenerator.Logging;
 using ChangelogGenerator.Verbs;
 using ChangelogGenerator.Verbs.New;
 
@@ -40,6 +41,7 @@ namespace ChangelogGenerator
 
             container.RegisterType<IFileSystem, FileSystem>();
 
+            container.RegisterInstance<IEnvironmentAbstraction>(new EnvironmentAbstraction(Environment.Exit));
             container.RegisterInstance("stdout", Console.Out);
             container.RegisterInstance("stderr", Console.Error);
             container.RegisterInstance(args);
