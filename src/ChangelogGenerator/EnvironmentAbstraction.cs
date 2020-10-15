@@ -1,9 +1,5 @@
 ﻿using System;
 
-using Unity;
-
-using UnityContainerAttributeRegistration.Attribute;
-
 
 namespace ChangelogGenerator
 {

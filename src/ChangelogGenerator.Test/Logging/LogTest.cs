@@ -15,9 +15,9 @@ namespace ChangelogGenerator.Test.Logging
         [Test]
         public void TestInfoObject()
         {
-            Options         options = new Options{Verbose = false};
-            Mock<TextWriter> stdout = new Mock<TextWriter>();
-            Mock<TextWriter> stderr = new Mock<TextWriter>();
+            Options          options = new Options {Verbose = false};
+            Mock<TextWriter> stdout  = new Mock<TextWriter>();
+            Mock<TextWriter> stderr  = new Mock<TextWriter>();
 
             ILog log = new Log(options, stdout.Object, stderr.Object);
 
@@ -32,7 +32,7 @@ namespace ChangelogGenerator.Test.Logging
         [Test]
         public void TestInfoString()
         {
-            Options          options = new Options{Verbose = false};
+            Options          options = new Options {Verbose = false};
             Mock<TextWriter> stdout  = new Mock<TextWriter>();
             Mock<TextWriter> stderr  = new Mock<TextWriter>();
 
@@ -45,10 +45,11 @@ namespace ChangelogGenerator.Test.Logging
             stdout.Verify(mock => mock.WriteLine(str), Times.Once);
             stdout.VerifyNoOtherCalls();
         }
+
         [Test]
         public void TestErrorObject()
         {
-            Options          options = new Options{Verbose = false};
+            Options          options = new Options {Verbose = false};
             Mock<TextWriter> stdout  = new Mock<TextWriter>();
             Mock<TextWriter> stderr  = new Mock<TextWriter>();
 
@@ -65,7 +66,7 @@ namespace ChangelogGenerator.Test.Logging
         [Test]
         public void TestErrorString()
         {
-            Options          options = new Options{Verbose = false};
+            Options          options = new Options {Verbose = false};
             Mock<TextWriter> stdout  = new Mock<TextWriter>();
             Mock<TextWriter> stderr  = new Mock<TextWriter>();
 
@@ -78,10 +79,11 @@ namespace ChangelogGenerator.Test.Logging
             stderr.Verify(mock => mock.WriteLine(str), Times.Once);
             stderr.VerifyNoOtherCalls();
         }
+
         [Test]
         public void TestInfoObject_Verbose()
         {
-            Options          options = new Options{Verbose = true};
+            Options          options = new Options {Verbose = true};
             Mock<TextWriter> stdout  = new Mock<TextWriter>();
             Mock<TextWriter> stderr  = new Mock<TextWriter>();
 
@@ -98,7 +100,7 @@ namespace ChangelogGenerator.Test.Logging
         [Test]
         public void TestInfoString_Verbose()
         {
-            Options          options = new Options{Verbose = true};
+            Options          options = new Options {Verbose = true};
             Mock<TextWriter> stdout  = new Mock<TextWriter>();
             Mock<TextWriter> stderr  = new Mock<TextWriter>();
 
@@ -111,10 +113,11 @@ namespace ChangelogGenerator.Test.Logging
             stdout.Verify(mock => mock.WriteLine(str), Times.Exactly(2));
             stdout.VerifyNoOtherCalls();
         }
+
         [Test]
         public void TestErrorObject_Verbose()
         {
-            Options          options = new Options{Verbose = true};
+            Options          options = new Options {Verbose = true};
             Mock<TextWriter> stdout  = new Mock<TextWriter>();
             Mock<TextWriter> stderr  = new Mock<TextWriter>();
 
@@ -131,7 +134,7 @@ namespace ChangelogGenerator.Test.Logging
         [Test]
         public void TestErrorString_Verbose()
         {
-            Options          options = new Options{Verbose = true};
+            Options          options = new Options {Verbose = true};
             Mock<TextWriter> stdout  = new Mock<TextWriter>();
             Mock<TextWriter> stderr  = new Mock<TextWriter>();
 

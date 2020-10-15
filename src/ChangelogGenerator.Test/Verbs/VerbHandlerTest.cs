@@ -41,7 +41,9 @@ namespace ChangelogGenerator.Test.Verbs
             Mock<IGitHubClient>           gitHubClientMock   = new Mock<IGitHubClient>();
             Mock<IMarkdownParser>         markdownParserMock = new Mock<IMarkdownParser>();
 
-            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object, fileSystemMock.Object, gitHubClientMock.Object, markdownParserMock.Object);
+            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object,
+                                                              fileSystemMock.Object, gitHubClientMock.Object,
+                                                              markdownParserMock.Object);
 
             verbHandler.Exit(exitCode);
 
@@ -84,9 +86,12 @@ namespace ChangelogGenerator.Test.Verbs
             gitHubClientMock.Setup(mock => mock.Repository.Get(It.IsAny<string>(), It.IsAny<string>()))
                             .Returns(Task.FromResult(new Repository(1337)));
             gitHubClientMock.Setup(mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()))
-                            .Returns(Task.FromResult(new List<PullRequest> {pullRequest,}.AsReadOnly() as IReadOnlyList<PullRequest>));
+                            .Returns(Task.FromResult(
+                                         new List<PullRequest> {pullRequest}.AsReadOnly() as IReadOnlyList<PullRequest>));
 
-            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object, fileSystemMock.Object, gitHubClientMock.Object, markdownParserMock.Object);
+            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object,
+                                                              fileSystemMock.Object, gitHubClientMock.Object,
+                                                              markdownParserMock.Object);
 
             IReadOnlyList<PullRequest> result = await verbHandler.LoadPullRequestsAsync();
 
@@ -108,7 +113,9 @@ namespace ChangelogGenerator.Test.Verbs
             gitHubClientMock.Setup(mock => mock.Repository.Get(It.IsAny<string>(), It.IsAny<string>()))
                             .Throws(new ApiException("", HttpStatusCode.Unauthorized));
 
-            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object, fileSystemMock.Object, gitHubClientMock.Object, markdownParserMock.Object);
+            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object,
+                                                              fileSystemMock.Object, gitHubClientMock.Object,
+                                                              markdownParserMock.Object);
 
             IReadOnlyList<PullRequest> result = await verbHandler.LoadPullRequestsAsync();
 
@@ -140,7 +147,9 @@ namespace ChangelogGenerator.Test.Verbs
             gitHubClientMock.Setup(mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()))
                             .Throws(new ApiException("", HttpStatusCode.Unauthorized));
 
-            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object, fileSystemMock.Object, gitHubClientMock.Object, markdownParserMock.Object);
+            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object,
+                                                              fileSystemMock.Object, gitHubClientMock.Object,
+                                                              markdownParserMock.Object);
 
             IReadOnlyList<PullRequest> result = await verbHandler.LoadPullRequestsAsync();
 
@@ -150,7 +159,8 @@ namespace ChangelogGenerator.Test.Verbs
             logMock.Verify(mock => mock.Info(It.IsAny<string>()), Times.Once);
             environmentMock.Verify(mock => mock.Exit((int) ExitCode.FailedToLoadData), Times.Once);
             gitHubClientMock.Verify(mock => mock.Repository.Get(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-            gitHubClientMock.Verify(mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()), Times.Once);
+            gitHubClientMock.Verify(
+                mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()), Times.Once);
             logMock.VerifyNoOtherCalls();
             environmentMock.VerifyNoOtherCalls();
             gitHubClientMock.VerifyNoOtherCalls();
@@ -193,11 +203,48 @@ namespace ChangelogGenerator.Test.Verbs
                .Setup(mock => mock.File.WriteAllTextAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                .Returns(Task.Run(() => { }));
 
-            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object, fileSystemMock.Object, gitHubClientMock.Object, markdownParserMock.Object);
+            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object,
+                                                              fileSystemMock.Object, gitHubClientMock.Object,
+                                                              markdownParserMock.Object);
 
             await verbHandler.WriteChangelogAsync(String.Empty);
 
-            fileSystemMock.Verify(mock => mock.File.WriteAllTextAsync("CHANGELOG.md", String.Empty, It.IsAny<CancellationToken>()));
+            fileSystemMock.Verify(
+                mock => mock.File.WriteAllTextAsync("CHANGELOG.md", String.Empty, It.IsAny<CancellationToken>()));
+            logMock.VerifyNoOtherCalls();
+            environmentMock.VerifyNoOtherCalls();
+            gitHubClientMock.VerifyNoOtherCalls();
+            markdownParserMock.VerifyNoOtherCalls();
+            fileSystemMock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        [TestCaseSource(nameof(WriteChangelogAsync_FailedToWrite_TestCases))]
+        public async Task TestWriteChangelogAsync_FailedToWrite(Exception exception)
+        {
+            Options                       options            = new Options();
+            Mock<ILog>                    logMock            = new Mock<ILog>();
+            Mock<IEnvironmentAbstraction> environmentMock    = new Mock<IEnvironmentAbstraction>();
+            Mock<IFileSystem>             fileSystemMock     = new Mock<IFileSystem>();
+            Mock<IGitHubClient>           gitHubClientMock   = new Mock<IGitHubClient>();
+            Mock<IMarkdownParser>         markdownParserMock = new Mock<IMarkdownParser>();
+
+            fileSystemMock
+               .Setup(mock => mock.File.WriteAllTextAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+               .Throws(exception);
+
+            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object,
+                                                              fileSystemMock.Object, gitHubClientMock.Object,
+                                                              markdownParserMock.Object);
+
+            await verbHandler.WriteChangelogAsync(String.Empty);
+
+            fileSystemMock.Verify(
+                mock => mock.File.WriteAllTextAsync("CHANGELOG.md", String.Empty, It.IsAny<CancellationToken>()));
+            logMock.Verify(mock => mock.Info(It.IsAny<string>()), Times.Once);
+            logMock.Verify(mock => mock.Error(It.IsAny<string>()), Times.Once);
+            logMock.Verify(mock => mock.VerboseError(It.IsAny<Exception>()), Times.Once);
+            environmentMock.Verify(mock => mock.Exit((int) ExitCode.FailedToWriteFile), Times.Once);
             logMock.VerifyNoOtherCalls();
             environmentMock.VerifyNoOtherCalls();
             gitHubClientMock.VerifyNoOtherCalls();
@@ -216,40 +263,15 @@ namespace ChangelogGenerator.Test.Verbs
             yield return new UnauthorizedAccessException();
         }
 
-        [Test]
-        [TestCaseSource(nameof(WriteChangelogAsync_FailedToWrite_TestCases))]
-        public async Task TestWriteChangelogAsync_FailedToWrite(Exception exception)
-        {
-            Options                       options            = new Options();
-            Mock<ILog>                    logMock            = new Mock<ILog>();
-            Mock<IEnvironmentAbstraction> environmentMock    = new Mock<IEnvironmentAbstraction>();
-            Mock<IFileSystem>             fileSystemMock     = new Mock<IFileSystem>();
-            Mock<IGitHubClient>           gitHubClientMock   = new Mock<IGitHubClient>();
-            Mock<IMarkdownParser>         markdownParserMock = new Mock<IMarkdownParser>();
-
-            fileSystemMock
-               .Setup(mock => mock.File.WriteAllTextAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-               .Throws(exception);
-
-            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object, fileSystemMock.Object, gitHubClientMock.Object, markdownParserMock.Object);
-
-            await verbHandler.WriteChangelogAsync(String.Empty);
-
-            fileSystemMock.Verify(mock => mock.File.WriteAllTextAsync("CHANGELOG.md", String.Empty, It.IsAny<CancellationToken>()));
-            logMock.Verify(mock => mock.Info(It.IsAny<string>()), Times.Once);
-            logMock.Verify(mock => mock.Error(It.IsAny<string>()), Times.Once);
-            logMock.Verify(mock => mock.VerboseError(It.IsAny<Exception>()), Times.Once);
-            environmentMock.Verify(mock => mock.Exit((int) ExitCode.FailedToWriteFile), Times.Once);
-            logMock.VerifyNoOtherCalls();
-            environmentMock.VerifyNoOtherCalls();
-            gitHubClientMock.VerifyNoOtherCalls();
-            markdownParserMock.VerifyNoOtherCalls();
-            fileSystemMock.VerifyNoOtherCalls();
-        }
-
         private class TestVerbHandler : VerbHandler<Options>
         {
-            public TestVerbHandler(Options options, ILog log, IEnvironmentAbstraction environment, IFileSystem fileSystem, IGitHubClient gitHubClient, IMarkdownParser markdownParser) : base(options, log, environment, fileSystem, gitHubClient, markdownParser)
+            public TestVerbHandler(Options options,
+                                   ILog log,
+                                   IEnvironmentAbstraction environment,
+                                   IFileSystem fileSystem,
+                                   IGitHubClient gitHubClient,
+                                   IMarkdownParser markdownParser) : base(options, log, environment, fileSystem, gitHubClient,
+                                                                          markdownParser)
             {
             }
 
@@ -275,7 +297,7 @@ namespace ChangelogGenerator.Test.Verbs
 
             protected override Task RunAsync()
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
         }
     }

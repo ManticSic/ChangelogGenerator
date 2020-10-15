@@ -4,7 +4,6 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
 
-using ChangelogGenerator.Logging;
 using ChangelogGenerator.Verbs;
 using ChangelogGenerator.Verbs.New;
 
@@ -24,8 +23,6 @@ namespace ChangelogGenerator
     [RegisterType]
     internal class Generator
     {
-        private const string ProductName = "ChangelogGenerator";
-
         private readonly string[]        args;
         private readonly IUnityContainer container;
 

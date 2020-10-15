@@ -12,11 +12,8 @@ namespace ChangelogGenerator.Test
         [TestCase(1)]
         public void TestExit(int exitCode)
         {
-            int? usedCode = null;
-            Action<int> exitAction = (code) =>
-                                     {
-                                         usedCode = code;
-                                     };
+            int?        usedCode   = null;
+            Action<int> exitAction = code => { usedCode = code; };
 
             IEnvironmentAbstraction environment = new EnvironmentAbstraction(exitAction);
 
