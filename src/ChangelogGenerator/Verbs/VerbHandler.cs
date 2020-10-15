@@ -42,13 +42,6 @@ namespace ChangelogGenerator.Verbs
 
         protected abstract Task RunAsync();
 
-        protected void ExitWithException([NotNull] string message, [NotNull] Exception exception, ExitCode exitCode)
-        {
-            Log.Error(message);
-            Log.VerboseError(exception);
-            Exit(exitCode);
-        }
-
         protected void Exit(ExitCode exitCode)
         {
             if(exitCode != ExitCode.Success)
@@ -151,6 +144,13 @@ namespace ChangelogGenerator.Verbs
                 // No permission to write the file
                 ExitWithException("You have no permission to write the file.", exception, ExitCode.FailedToWriteFile);
             }
+        }
+
+        private void ExitWithException([NotNull] string message, [NotNull] Exception exception, ExitCode exitCode)
+        {
+            Log.Error(message);
+            Log.VerboseError(exception);
+            Exit(exitCode);
         }
 
         private VersionEntry CreateVersionEntry([NotNull] MilestoneObject milestone)
