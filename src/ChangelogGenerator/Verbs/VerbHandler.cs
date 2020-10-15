@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 
+using ChangelogGenerator.Logging;
 using ChangelogGenerator.Models;
 
 using JetBrains.Annotations;

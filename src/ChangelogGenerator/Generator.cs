@@ -39,9 +39,10 @@ namespace ChangelogGenerator
             IUnityContainer container = new UnityContainerPopulator().Populate();
 
             container.RegisterType<IFileSystem, FileSystem>();
-            container.RegisterType<ILog, Log>();
             container.RegisterType<IEnvironmentAbstraction, EnvironmentAbstraction>();
 
+            container.RegisterInstance("stdout", Console.Out);
+            container.RegisterInstance("stderr", Console.Error);
             container.RegisterInstance(args);
 
             container.RegisterFactory<IGitHubClient>(GitHubClientFactory);

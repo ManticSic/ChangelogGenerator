@@ -8,6 +8,7 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
+using ChangelogGenerator.Logging;
 using ChangelogGenerator.Test.Builder;
 using ChangelogGenerator.Verbs;
 

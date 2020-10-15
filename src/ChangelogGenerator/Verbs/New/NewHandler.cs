@@ -2,6 +2,8 @@
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 
+using ChangelogGenerator.Logging;
+
 using Octokit;
 
 using UnityContainerAttributeRegistration.Attribute;
