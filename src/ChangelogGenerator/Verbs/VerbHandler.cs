@@ -71,11 +71,15 @@ namespace ChangelogGenerator.Verbs
             {
                 ExitWithException($"Failed to load repository data for {Options.Owner}, {Options.Repository}.",
                                   exception, ExitCode.FailedToLoadData);
+
+                return new List<PullRequest>();
             }
             catch(ApiException exception) when(pullRequests == null)
             {
                 ExitWithException($"Failed to load pullrequest for repository {repository?.Owner}/{repository?.Name}.",
                                   exception, ExitCode.FailedToLoadData);
+
+                return new List<PullRequest>();
             }
 
             return pullRequests;
