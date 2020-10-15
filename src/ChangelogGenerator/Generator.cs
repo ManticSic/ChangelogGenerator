@@ -39,7 +39,6 @@ namespace ChangelogGenerator
             IUnityContainer container = new UnityContainerPopulator().Populate();
 
             container.RegisterType<IFileSystem, FileSystem>();
-            container.RegisterType<IEnvironmentAbstraction, EnvironmentAbstraction>();
 
             container.RegisterInstance("stdout", Console.Out);
             container.RegisterInstance("stderr", Console.Error);
