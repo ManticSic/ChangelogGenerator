@@ -101,6 +101,68 @@ namespace ChangelogGenerator.Test.Verbs
         }
 
         [Test]
+        public async Task TestLoadPullRequestsAsync_WithPredicate()
+        {
+            Options                       options            = new Options();
+            Mock<ILog>                    logMock            = new Mock<ILog>();
+            Mock<IEnvironmentAbstraction> environmentMock    = new Mock<IEnvironmentAbstraction>();
+            Mock<IFileSystem>             fileSystemMock     = new Mock<IFileSystem>();
+            Mock<IGitHubClient>           gitHubClientMock   = new Mock<IGitHubClient>();
+            Mock<IMarkdownParser>         markdownParserMock = new Mock<IMarkdownParser>();
+
+            Milestone milestone = new MilestoneBuilder
+                                  {
+                                      Title = "v1.0.0",
+                                      ClosedAt = DateTimeOffset.ParseExact("15.09.1993", "dd.MM.yyyy",
+                                                                           CultureInfo.InvariantCulture),
+                                  }.Build();
+            PullRequest pullRequest1 = new PullRequestBuilder
+                                      {
+                                          Milestone = milestone,
+                                          Body      = File.ReadAllText("./Assets/description_at-the-middle.md"),
+                                      }.Build();
+            PullRequest pullRequest2 = new PullRequestBuilder
+                                      {
+                                          Milestone = milestone,
+                                      }.Build();
+            PullRequest pullRequest3 = new PullRequestBuilder
+                                      {
+                                          Body      = File.ReadAllText("./Assets/description_at-the-middle.md"),
+                                      }.Build();
+            PullRequest pullRequest4 = new PullRequestBuilder
+                                       {
+                                           Milestone = milestone,
+                                           Body      = File.ReadAllText("./Assets/description_at-the-middle.md"),
+                                       }.Build();
+
+            gitHubClientMock.Setup(mock => mock.Repository.Get(It.IsAny<string>(), It.IsAny<string>()))
+                            .Returns(Task.FromResult(new Repository(1337)));
+            gitHubClientMock.Setup(mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()))
+                            .Returns(Task.FromResult(
+                                         new List<PullRequest> {pullRequest1, pullRequest2, pullRequest3, pullRequest4}.AsReadOnly() as IReadOnlyList<PullRequest>));
+
+            int predicateCounter = 0;
+            Func<PullRequest, bool> predicate = pullRequest =>
+                                                {
+                                                    predicateCounter++;
+                                                    return pullRequest.Milestone != null
+                                                        && !String.IsNullOrWhiteSpace(pullRequest.Body);
+                                                };
+
+            TestVerbHandler verbHandler = new TestVerbHandler(options, logMock.Object, environmentMock.Object,
+                                                              fileSystemMock.Object, gitHubClientMock.Object,
+                                                              markdownParserMock.Object);
+
+            IReadOnlyList<PullRequest> result = await verbHandler.LoadPullRequestsAsync(predicate);
+
+            NotNull(result);
+            AreEqual(4, predicateCounter);
+            AreEqual(2, result.Count);
+            AreEqual(pullRequest1, result[0]);
+            AreEqual(pullRequest4, result[1]);
+        }
+
+        [Test]
         public async Task TestLoadPullRequestsAsync_FailedToLoadRepository()
         {
             Options                       options            = new Options();
@@ -278,6 +340,11 @@ namespace ChangelogGenerator.Test.Verbs
             public void Exit(ExitCode exitCode)
             {
                 base.Exit(exitCode);
+            }
+
+            public Task<IReadOnlyList<PullRequest>> LoadPullRequestsAsync(Func<PullRequest, bool> predicate)
+            {
+                return base.LoadPullRequestsAsync(predicate);
             }
 
             public Task<IReadOnlyList<PullRequest>> LoadPullRequestsAsync()

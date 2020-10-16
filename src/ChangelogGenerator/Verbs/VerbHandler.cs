@@ -53,7 +53,12 @@ namespace ChangelogGenerator.Verbs
             environment.Exit((int) exitCode);
         }
 
-        protected async Task<IReadOnlyList<PullRequest>> LoadPullRequestsAsync()
+        protected Task<IReadOnlyList<PullRequest>> LoadPullRequestsAsync()
+        {
+            return LoadPullRequestsAsync(pullRequest => true);
+        }
+
+        protected virtual async Task<IReadOnlyList<PullRequest>> LoadPullRequestsAsync(Func<PullRequest, bool> predicate)
         {
             Repository                 repository   = null;
             IReadOnlyList<PullRequest> pullRequests = null;
@@ -83,7 +88,8 @@ namespace ChangelogGenerator.Verbs
                 return new List<PullRequest>();
             }
 
-            return pullRequests;
+            return pullRequests.Where(predicate)
+                               .ToList();
         }
 
         protected string CreateChangelogMarkdown([NotNull] [ItemNotNull] IReadOnlyList<PullRequest> pullRequests)

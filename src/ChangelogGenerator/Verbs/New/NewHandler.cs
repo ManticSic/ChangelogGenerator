@@ -32,8 +32,8 @@ namespace ChangelogGenerator.Verbs.New
 
             if(pullRequests == null || pullRequests.Count < 1)
             {
-                Log.Error("Failed to load pull request.");
-                Log.VerboseError("Failed to load pull request, but HTTP request was successful.");
+                Log.Error("Failed to load any pull request.");
+                Log.VerboseError("Failed to load any pull request, but HTTP request was successful.");
                 Exit(ExitCode.FailedToLoadData);
 
                 return;
