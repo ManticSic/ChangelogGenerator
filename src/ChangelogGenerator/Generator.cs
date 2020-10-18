@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
 
 using ChangelogGenerator.Verbs;
 using ChangelogGenerator.Verbs.Generate;
