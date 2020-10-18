@@ -28,5 +28,22 @@ Generate a new or override a existing changelog file.
 -v, --verbose        (Default: false) Be verbose.
 ```
 
+### ChangelogGenerator-generate
+Generate a changelog for a specific milestone.
+
+```
+--milestone      Required. Title of the milestone.
+
+--owner          Required. Set the owner of the repository.
+
+--repository     Required. Set the repository name.
+
+--token          GitHub authentication token.
+
+-o, --output     (Default: CHANGELOG.md) Set output file name.
+
+-v, --verbose    (Default: false) Be verbose.
+```
+
 
 
