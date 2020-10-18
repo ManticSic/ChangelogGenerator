@@ -28,7 +28,7 @@ namespace ChangelogGenerator.Verbs.New
         {
             Log.VerboseInfo("Create full changelog");
 
-            IReadOnlyList<PullRequest> pullRequests = await LoadPullRequestsAsync();
+            IReadOnlyList<PullRequest> pullRequests = await LoadPullRequestsAsync(PullRequestFilter);
 
             if(pullRequests == null || pullRequests.Count < 1)
             {
@@ -39,7 +39,7 @@ namespace ChangelogGenerator.Verbs.New
                 return;
             }
 
-            Log.VerboseInfo($"Successfully fetched {pullRequests?.Count} pull requests.");
+            Log.VerboseInfo($"Successfully fetched {pullRequests.Count} pull requests.");
             string changelog = CreateChangelogMarkdown(pullRequests);
 
             Log.VerboseInfo($"Changelog:\n{changelog}");
@@ -47,6 +47,18 @@ namespace ChangelogGenerator.Verbs.New
             await WriteChangelogAsync(changelog);
 
             Exit(ExitCode.Success);
+        }
+
+        private bool PullRequestFilter(PullRequest pullRequest)
+        {
+            bool milestoneCheck = true;
+
+            if(Options.ExcludeUnknown)
+            {
+                milestoneCheck = pullRequest.Milestone != null;
+            }
+
+            return milestoneCheck;
         }
     }
 }
