@@ -138,10 +138,9 @@ namespace ChangelogGenerator.Test.Verbs
             gitHubClientMock.Setup(mock => mock.Repository.Get(It.IsAny<string>(), It.IsAny<string>()))
                             .Returns(Task.FromResult(new Repository(1337)));
             gitHubClientMock.Setup(mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()))
-                            .Returns(Task.FromResult(
-                                         new List<PullRequest>
-                                             {pullRequest1, pullRequest2, pullRequest3, pullRequest4}
-                                            .AsReadOnly() as IReadOnlyList<PullRequest>));
+                            .Returns(Task.FromResult(new List<PullRequest>
+                                                     {pullRequest1, pullRequest2, pullRequest3, pullRequest4}
+                                                        .AsReadOnly() as IReadOnlyList<PullRequest>));
 
             int predicateCounter = 0;
             Func<PullRequest, bool> predicate = pullRequest =>
