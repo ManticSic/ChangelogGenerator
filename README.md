@@ -15,15 +15,17 @@ Display version information.
 Generate a new or override a existing changelog file.
 
 ```
---owner          Required. Set the owner of the repository.
+--exclude-unknown    (Default: false) Exclude pull requests without milestones
 
---repository     Required. Set the repository name.
+--owner              Required. Set the owner of the repository.
 
---token          GitHub authentication token.
+--repository         Required. Set the repository name.
 
--o, --output     (Default: CHANGELOG.md) Set output file name.
+--token              GitHub authentication token.
 
--v, --verbose    (Default: false) Be verbose.
+-o, --output         (Default: CHANGELOG.md) Set output file name.
+
+-v, --verbose        (Default: false) Be verbose.
 ```
 
 
