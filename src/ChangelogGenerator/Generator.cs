@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Serialization;
 
 using ChangelogGenerator.Verbs;
+using ChangelogGenerator.Verbs.Generate;
 using ChangelogGenerator.Verbs.New;
 
 using CommandLine;
@@ -101,8 +103,9 @@ namespace ChangelogGenerator
 
         private void Run()
         {
-            Parser.Default.ParseArguments<NewOptions, object>(args)
+            Parser.Default.ParseArguments<NewOptions, GenerateOptions>(args)
                   .WithParsed<NewOptions>(HandleNew)
+                  .WithParsed<GenerateOptions>(HandleGenerate)
                   .WithNotParsed(HandleNotParsed);
         }
 
@@ -118,6 +121,15 @@ namespace ChangelogGenerator
             container.RegisterInstance(options);
             container.RegisterInstance<Options>(options);
             IVerbHandler handler = container.Resolve<NewHandler>();
+
+            handler.Run();
+        }
+
+        private void HandleGenerate(GenerateOptions options)
+        {
+            container.RegisterInstance(options);
+            container.RegisterInstance<Options>(options);
+            IVerbHandler handler = container.Resolve<GenerateHandler>();
 
             handler.Run();
         }
