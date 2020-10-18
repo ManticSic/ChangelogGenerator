@@ -117,18 +117,18 @@ namespace ChangelogGenerator.Test.Verbs
                                                                            CultureInfo.InvariantCulture),
                                   }.Build();
             PullRequest pullRequest1 = new PullRequestBuilder
-                                      {
-                                          Milestone = milestone,
-                                          Body      = File.ReadAllText("./Assets/description_at-the-middle.md"),
-                                      }.Build();
+                                       {
+                                           Milestone = milestone,
+                                           Body      = File.ReadAllText("./Assets/description_at-the-middle.md"),
+                                       }.Build();
             PullRequest pullRequest2 = new PullRequestBuilder
-                                      {
-                                          Milestone = milestone,
-                                      }.Build();
+                                       {
+                                           Milestone = milestone,
+                                       }.Build();
             PullRequest pullRequest3 = new PullRequestBuilder
-                                      {
-                                          Body      = File.ReadAllText("./Assets/description_at-the-middle.md"),
-                                      }.Build();
+                                       {
+                                           Body = File.ReadAllText("./Assets/description_at-the-middle.md"),
+                                       }.Build();
             PullRequest pullRequest4 = new PullRequestBuilder
                                        {
                                            Milestone = milestone,
@@ -139,12 +139,15 @@ namespace ChangelogGenerator.Test.Verbs
                             .Returns(Task.FromResult(new Repository(1337)));
             gitHubClientMock.Setup(mock => mock.PullRequest.GetAllForRepository(It.IsAny<long>(), It.IsAny<PullRequestRequest>()))
                             .Returns(Task.FromResult(
-                                         new List<PullRequest> {pullRequest1, pullRequest2, pullRequest3, pullRequest4}.AsReadOnly() as IReadOnlyList<PullRequest>));
+                                         new List<PullRequest>
+                                             {pullRequest1, pullRequest2, pullRequest3, pullRequest4}
+                                            .AsReadOnly() as IReadOnlyList<PullRequest>));
 
             int predicateCounter = 0;
             Func<PullRequest, bool> predicate = pullRequest =>
                                                 {
                                                     predicateCounter++;
+
                                                     return pullRequest.Milestone != null
                                                         && !String.IsNullOrWhiteSpace(pullRequest.Body);
                                                 };
